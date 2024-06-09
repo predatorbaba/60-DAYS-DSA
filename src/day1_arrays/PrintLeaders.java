@@ -1,5 +1,8 @@
 package day1_arrays;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class PrintLeaders {
 
     public static void main(String[] args) {
@@ -7,14 +10,33 @@ public class PrintLeaders {
         int[] input2 = {};
         int[] input3 = {10,20,30};
         int[] input4 = {30,20,10};
+        int[] input5 = {16,17,4,3,5,2};
 
-        printLeaders(input1);
-        printLeaders(input2);
-        printLeaders(input3);
-        printLeaders(input4);
+        ArrayList<Integer> result1 = printLeaders(input1);
+        ArrayList<Integer> result2 = printLeaders(input2);
+        ArrayList<Integer> result3 = printLeaders(input3);
+        ArrayList<Integer> result4 = printLeaders(input4);
+        ArrayList<Integer> result5 = printLeaders(input5);
+
+        for(Integer i: result1) {
+            System.out.print(i+",");
+        }
+        for(Integer i: result2) {
+            System.out.print(i+",");
+        }
+        for(Integer i: result3) {
+            System.out.print(i+",");
+        }
+        for(Integer i: result4) {
+            System.out.print(i+",");
+        }
+        for(Integer i: result5) {
+            System.out.print(i+",");
+        }
+
     }
 
-    private static void printLeaders(int[] arr) {
+    private static ArrayList<Integer> printLeaders(int[] arr) {
         /*
             What is leader: If there is no greater element on the right side of curr_ele, and rightmost element is always leader
             Pseudo Code ->
@@ -23,21 +45,35 @@ public class PrintLeaders {
                     Step 1.1: Store last element in a variable
                     Step 1.2: Check (curr_leader < curr_ele) -> update curr_leader and print
          */
+        ArrayList<Integer> result = new ArrayList<>();
         int size = arr.length;
-        if(size == 0) return;
+        if(size == 0) return result;
         if(size == 1) {
-            System.out.println(arr[0]);
-            return;
+            result.add(arr[0]);
+            return result;
         }
         int curr_leader = arr[size-1];
-        System.out.print(curr_leader+",");
+        result.add(curr_leader);
         for(int i=size-1; i>=0; i--) {
-            if(curr_leader < arr[i]) {
+            if (curr_leader < arr[i]) {
                 curr_leader = arr[i];
-                System.out.print(curr_leader+",");
+                result.add(curr_leader);
             }
         }
-        System.out.println();
+        reverse(result);
+        return result;
+    }
+
+    private static void reverse(ArrayList<Integer> arr) {
+        int left = 0;
+        int right = arr.size() - 1;
+        while(left <= right) {
+            int temp = arr.get(left);
+            arr.set(left, arr.get(right));
+            arr.set(right, temp);
+            left++;
+            right--;
+        }
     }
 
 }
